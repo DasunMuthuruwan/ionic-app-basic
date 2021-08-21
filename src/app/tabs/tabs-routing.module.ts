@@ -4,12 +4,21 @@ import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        path: 'recipes',
+        children:[
+          {
+            path: '',
+            loadChildren: () => import('../recipes/recipes.module').then(m => m.RecipesPageModule)
+          },
+          {
+            path:':recipeId',
+            loadChildren: () => import('../recipes/recipe-detail/recipe-detail.module').then( m => m.RecipeDetailPageModule)
+          }
+        ]
       },
       {
         path: 'tab2',
@@ -21,14 +30,14 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: 'recipes',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: 'recipes',
     pathMatch: 'full'
   }
 ];
